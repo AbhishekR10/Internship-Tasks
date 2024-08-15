@@ -1,0 +1,253 @@
+## The following Dataset Analysis is for the 2016 Population Census:
+
+
+-- Retrieve all data from the table
+SELECT * FROM population_data;
+
+
+-- Calculate the population growth between 2010 and 2016 for each city
+SELECT 
+    "Geography, full name (City, State)", 
+    "Population Estimate (as of July 1) - 2010" AS "Population_2010", 
+    "Population Estimate (as of July 1) - 2016" AS "Population_2016",
+    ("Population Estimate (as of July 1) - 2016" - "Population Estimate (as of July 1) - 2010") AS "Population_Growth"
+FROM 
+    population_data
+ORDER BY 
+    "Population_Growth" DESC;
+
+
+-- Calculate the percentage growth from 2010 to 2016
+SELECT 
+    "Geography, full name (City, State)", 
+    "Population Estimate (as of July 1) - 2010" AS "Population_2010", 
+    "Population Estimate (as of July 1) - 2016" AS "Population_2016",
+    ((("Population Estimate (as of July 1) - 2016" - "Population Estimate (as of July 1) - 2010") * 100.0) / "Population Estimate (as of July 1) - 2010") AS "Percentage_Growth"
+FROM 
+    population_data
+ORDER BY 
+    "Percentage_Growth" DESC;
+
+
+-- Calculate the average population from 2010 to 2016 for each city
+SELECT 
+    "Geography, full name (City, State)", 
+    ROUND((
+        ("Population Estimate (as of July 1) - 2010" +
+        "Population Estimate (as of July 1) - 2011" +
+        "Population Estimate (as of July 1) - 2012" +
+        "Population Estimate (as of July 1) - 2013" +
+        "Population Estimate (as of July 1) - 2014" +
+        "Population Estimate (as of July 1) - 2015" +
+        "Population Estimate (as of July 1) - 2016") / 7.0
+    ), 2) AS "Average_Population_2010_2016"
+FROM 
+    population_data
+ORDER BY 
+    "Average_Population_2010_2016" DESC;
+
+
+-- Find cities where the population decreased from 2010 to 2016
+SELECT 
+    "Geography, full name (City, State)", 
+    "Population Estimate (as of July 1) - 2010" AS "Population_2010", 
+    "Population Estimate (as of July 1) - 2016" AS "Population_2016",
+    ("Population Estimate (as of July 1) - 2016" - "Population Estimate (as of July 1) - 2010") AS "Population_Change"
+FROM 
+    population_data
+WHERE 
+    "Population Estimate (as of July 1) - 2016" < "Population Estimate (as of July 1) - 2010"
+ORDER BY 
+    "Population_Change" ASC;
+
+
+-- Identify the city with the highest population in any given year from 2010 to 2016
+SELECT 
+    "Geography, full name (City, State)", 
+    GREATEST(
+        "Population Estimate (as of July 1) - 2010", 
+        "Population Estimate (as of July 1) - 2011", 
+        "Population Estimate (as of July 1) - 2012", 
+        "Population Estimate (as of July 1) - 2013", 
+        "Population Estimate (as of July 1) - 2014", 
+        "Population Estimate (as of July 1) - 2015", 
+        "Population Estimate (as of July 1) - 2016"
+    ) AS "Max_Population"
+FROM 
+    population_data
+ORDER BY 
+    "Max_Population" DESC;
+
+
+-- Calculate the year-over-year population growth for each city
+SELECT 
+    "Geography, full name (City, State)",
+    "Population Estimate (as of July 1) - 2011" - "Population Estimate (as of July 1) - 2010" AS "Growth_2010_2011",
+    "Population Estimate (as of July 1) - 2012" - "Population Estimate (as of July 1) - 2011" AS "Growth_2011_2012",
+    "Population Estimate (as of July 1) - 2013" - "Population Estimate (as of July 1) - 2012" AS "Growth_2012_2013",
+    "Population Estimate (as of July 1) - 2014" - "Population Estimate (as of July 1) - 2013" AS "Growth_2013_2014",
+    "Population Estimate (as of July 1) - 2015" - "Population Estimate (as of July 1) - 2014" AS "Growth_2014_2015",
+    "Population Estimate (as of July 1) - 2016" - "Population Estimate (as of July 1) - 2015" AS "Growth_2015_2016"
+FROM 
+    population_data
+ORDER BY 
+    "Geography, full name (City, State)";
+
+-- Determine the city with the most volatile population (i.e., the largest fluctuation year over year)
+SELECT 
+    "Geography, full name (City, State)", 
+    MAX(
+        ABS("Population Estimate (as of July 1) - 2011" - "Population Estimate (as of July 1) - 2010"),
+        ABS("Population Estimate (as of July 1) - 2012" - "Population Estimate (as of July 1) - 2011"),
+        ABS("Population Estimate (as of July 1) - 2013" - "Population Estimate (as of July 1) - 2012"),
+        ABS("Population Estimate (as of July 1) - 2014" - "Population Estimate (as of July 1) - 2013"),
+        ABS("Population Estimate (as of July 1) - 2015" - "Population Estimate (as of July 1) - 2014"),
+        ABS("Population Estimate (as of July 1) - 2016" - "Population Estimate (as of July 1) - 2015")
+    ) AS "Max_Fluctuation"
+FROM 
+    population_data
+ORDER BY 
+    "Max_Fluctuation" DESC;
+
+-- Identify cities with consistent population growth each year from 2010 to 2016
+SELECT 
+    "Geography, full name (City, State)"
+FROM 
+    population_data
+WHERE 
+    "Population Estimate (as of July 1) - 2011" > "Population Estimate (as of July 1) - 2010" AND
+    "Population Estimate (as of July 1) - 2012" > "Population Estimate (as of July 1) - 2011" AND
+    "Population Estimate (as of July 1) - 2013" > "Population Estimate (as of July 1) - 2012" AND
+    "Population Estimate (as of July 1) - 2014" > "Population Estimate (as of July 1) - 2013" AND
+    "Population Estimate (as of July 1) - 2015" > "Population Estimate (as of July 1) - 2014" AND
+    "Population Estimate (as of July 1) - 2016" > "Population Estimate (as of July 1) - 2015"
+ORDER BY 
+    "Geography, full name (City, State)";
+
+
+-- Retrieve the top 5 cities with the largest population in 2016
+SELECT 
+    "Geography, full name (City, State)", 
+    "Population Estimate (as of July 1) - 2016" AS "Population_2016"
+FROM 
+    population_data
+ORDER BY 
+    "Population_2016" DESC
+LIMIT 5;
+
+
+
+## Big Game Census Data Analysis:
+
+-- Analyze the distribution of player ages by position.
+SELECT 
+    "Player Position", 
+    MIN("Player Age") AS "Min_Age", 
+    MAX("Player Age") AS "Max_Age", 
+    AVG("Player Age") AS "Average_Age",
+    COUNT(*) AS "Total_Players"
+FROM 
+    player_data
+GROUP BY 
+    "Player Position"
+ORDER BY 
+    "Player Position";
+
+-- Retrieve the top 5 heaviest players by team
+SELECT 
+    "Player Team", 
+    "Player Name", 
+    "Player Weight (lbs.)"
+FROM 
+    player_data
+ORDER BY 
+    "Player Weight (lbs.)" DESC
+LIMIT 5;
+
+-- Calculate the average weight of players by conference
+SELECT 
+    "Conference", 
+    AVG("Player Weight (lbs.)") AS "Average_Weight"
+FROM 
+    player_data
+GROUP BY 
+    "Conference"
+ORDER BY 
+    "Average_Weight" DESC;
+
+-- Count the number of players from each birthplace state
+SELECT 
+    "Player Birth State", 
+    COUNT(*) AS "Number_of_Players"
+FROM 
+    player_data
+GROUP BY 
+    "Player Birth State"
+ORDER BY 
+    "Number_of_Players" DESC;
+
+-- Calculate the average age of players by college
+SELECT 
+    "Player College", 
+    AVG("Player Age") AS "Average_Age"
+FROM 
+    player_data
+GROUP BY 
+    "Player College"
+ORDER BY 
+    "Average_Age" DESC;
+
+-- Find players with the most years played and calculate their average weight
+SELECT 
+    "Player Name", 
+    "Years Played",
+    AVG("Player Weight (lbs.)") AS "Average_Weight"
+FROM 
+    player_data
+GROUP BY 
+    "Player Name", 
+    "Years Played"
+ORDER BY 
+    "Years Played" DESC
+LIMIT 10;
+
+-- Retrieve the top 3 conferences with the most players
+SELECT 
+    "Conference", 
+    COUNT(*) AS "Number_of_Players"
+FROM 
+    player_data
+GROUP BY 
+    "Conference"
+ORDER BY 
+    "Number_of_Players" DESC
+LIMIT 3;
+
+-- Find players from cities with the largest population (assuming there's a column with city population)
+SELECT 
+    "Player Name", 
+    "Player Birthplace (city, town, etc.)", 
+    "2016 Population Estimates (except where otherwise noted)"
+FROM 
+    player_data
+WHERE 
+    "2016 Population Estimates (except where otherwise noted)" = (SELECT MAX("2016 Population Estimates (except where otherwise noted)") FROM player_data)
+ORDER BY 
+    "Player Name";
+
+-- Analyze the correlation between player weight and age
+SELECT 
+    CORR("Player Weight (lbs.)", "Player Age") AS "Weight_Age_Correlation"
+FROM 
+    player_data;
+
+
+
+
+
+
+
+
+
+
+
