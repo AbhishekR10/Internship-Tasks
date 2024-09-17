@@ -9,24 +9,5 @@ Conduct a comprehensive year-wise analysis of India's FDI landscape to unveil se
 
 # 𝗜𝗻𝘀𝗶𝗴𝗵𝘁𝘀:
 
-## 1. Sᴇʀᴠɪᴄᴇ Sᴇᴄᴛᴏʀ Dᴏᴍɪɴᴀɴᴀᴄᴇ:
-
-### ⦿ The service sector (financial and non-financial) emerged as the largest recipient, constituting 17% of total FDI inflow.
-### ⦿ Foreign investors are particularly interested in financial services due to profit-generating advantages and ease of repatriation.
-
-## 2. Sᴇᴄᴛᴏʀᴀʟ Dɪꜱᴛʀɪʙᴜᴛɪᴏɴ:
-
-### ⦿ Following the service sector, Computer Software and Hardware garnered significant FDI, representing 7% of the total inflow.
-### ⦿ Other notable sectors contributing to India's FDI landscape include Telecommunication, Construction Development, and the Automobile industry, each with substantial shares ranging from 6% to 4%.
-
-## 3. Lᴏᴡ Iɴᴛᴇʀᴇꜱᴛ Sᴇᴄᴛᴏʀꜱ:
-
-### ⦿ Sectors such as Coir, Defence Industries, Mathematical Instruments, and Coal Production saw minimal interest, with shares equal to or less than 1%.
-### ⦿ Approximately 28 to 30 sectors fall into this category, highlighting areas of lesser FDI attraction.
-
-## 4. Rɪꜱᴋ Mɪᴛɪɢᴀᴛɪᴏɴ & Eqᴜɪʟɪʙʀɪᴜᴍ:
-
-### ⦿ Through detailed analysis, the project aimed to mitigate investment risks and achieve equilibrium by identifying trends, peaks, and troughs in FDI inflows.
-### ⦿ Analytics played a crucial role in understanding the dynamic nature of investment, enabling stakeholders to make informed decisions.
-
+In the FDI Analytics project, the analysis highlighted that the service sector, encompassing both financial and non-financial services, was the largest recipient of foreign direct investment, accounting for 17% of total FDI inflows. This strong interest in financial services can be attributed to their profit-generating potential and the ease of repatriation. Following the service sector, significant investments were observed in Computer Software and Hardware, which collectively represented 7% of the total FDI. Other sectors such as Telecommunication, Construction Development, and the Automobile industry also played a notable role, each contributing between 6% and 4% to the FDI landscape. Conversely, sectors like Coir, Defence Industries, Mathematical Instruments, and Coal Production attracted minimal investment, with each sector's share being 1% or less. This pattern, covering approximately 28 to 30 sectors, underscores areas of lower FDI interest and highlights sectors with limited foreign investment appeal.
 
