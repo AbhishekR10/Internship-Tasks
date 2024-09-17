@@ -1,0 +1,141 @@
+-- Fertilizers: Year-over-Year Growth Rate
+
+WITH FertilizerGrowth AS (
+    SELECT
+        Year,
+        (SUM(Fertilizers) - LAG(SUM(Fertilizers)) OVER (ORDER BY Year)) / LAG(SUM(Fertilizers)) OVER (ORDER BY Year) * 100 AS GrowthRate
+    FROM fertilizers_table
+    GROUP BY Year
+)
+SELECT * FROM FertilizerGrowth;
+
+-- Chemicals: Average Production per Region
+
+SELECT
+    Region,
+    AVG(Production) AS AvgProduction
+FROM chemicals_table
+GROUP BY Region;
+
+-- Pharmaceuticals: Top 5 Countries by Average Sales
+
+SELECT
+    Country,
+    AVG(Sales) AS AvgSales
+FROM pharmaceuticals_table
+GROUP BY Country
+ORDER BY AvgSales DESC
+LIMIT 5;
+
+-- Automotive: Market Share by Vehicle Type
+
+WITH TotalSales AS (
+    SELECT SUM(Sales) AS Total
+    FROM automotive_table
+)
+SELECT
+    VehicleType,
+    SUM(Sales) / Total AS MarketShare
+FROM automotive_table, TotalSales
+GROUP BY VehicleType;
+
+-- Retail: Monthly Sales Growth Rate
+
+WITH MonthlyGrowth AS (
+    SELECT
+        Month,
+        (SUM(Sales) - LAG(SUM(Sales)) OVER (ORDER BY Year, Month)) / LAG(SUM(Sales)) OVER (ORDER BY Year, Month) * 100 AS GrowthRate
+    FROM retail_sales_table
+    GROUP BY Year, Month
+)
+SELECT * FROM MonthlyGrowth;
+
+-- Telecom: Customer Churn Rate by Region
+
+SELECT
+    Region,
+    SUM(CASE WHEN Churn = 'Yes' THEN 1 ELSE 0 END) / COUNT(*) * 100 AS ChurnRate
+FROM telecom_customers_table
+GROUP BY Region;
+
+-- Energy: Annual Energy Consumption Trends
+
+SELECT
+    Year,
+    SUM(Consumption) AS TotalConsumption,
+    AVG(Consumption) AS AvgConsumption
+FROM energy_consumption_table
+GROUP BY Year
+ORDER BY Year;
+
+-- Finance: Yearly Profit Margin Trend
+
+SELECT
+    Year,
+    (SUM(Profit) / SUM(Sales)) * 100 AS ProfitMargin
+FROM finance_table
+GROUP BY Year
+ORDER BY Year;
+
+-- Real Estate: Average Property Price Change
+
+WITH PriceChange AS (
+    SELECT
+        Year,
+        (AVG(Price) - LAG(AVG(Price)) OVER (ORDER BY Year)) / LAG(AVG(Price)) OVER (ORDER BY Year) * 100 AS PriceChange
+    FROM real_estate_table
+    GROUP BY Year
+)
+SELECT * FROM PriceChange;
+
+-- Healthcare: Cost Per Patient by Department
+
+SELECT
+    Department,
+    AVG(Cost) AS AvgCostPerPatient
+FROM healthcare_costs_table
+GROUP BY Department;
+
+-- Education: Enrollment Growth by Course
+
+WITH EnrollmentGrowth AS (
+    SELECT
+        Course,
+        Year,
+        (SUM(Enrollments) - LAG(SUM(Enrollments)) OVER (PARTITION BY Course ORDER BY Year)) / LAG(SUM(Enrollments)) OVER (PARTITION BY Course ORDER BY Year) * 100 AS GrowthRate
+    FROM education_enrollments_table
+    GROUP BY Course, Year
+)
+SELECT * FROM EnrollmentGrowth;
+
+-- Manufacturing: Efficiency Ratio by Plant
+
+SELECT
+    Plant,
+    AVG(ProductionOutput / ProductionInput) AS EfficiencyRatio
+FROM manufacturing_table
+GROUP BY Plant;
+
+-- Agriculture: Crop Yield Variability
+
+SELECT
+    CropType,
+    STDDEV(Yield) AS YieldVariability
+FROM agriculture_yields_table
+GROUP BY CropType;
+
+-- Logistics: Delivery Timeliness by Carrier
+
+SELECT
+    Carrier,
+    AVG(DATEDIFF(DeliveryDate, OrderDate)) AS AvgDeliveryTime
+FROM logistics_table
+GROUP BY Carrier;
+
+-- Hospitality: Guest Satisfaction Score by Hotel
+
+SELECT
+    Hotel,
+    AVG(SatisfactionScore) AS AvgSatisfaction
+FROM hospitality_reviews_table
+GROUP BY Hotel;
